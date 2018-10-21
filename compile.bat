@@ -1,0 +1,1 @@
+robocopy.exe templates output /xf *.pug /E | pug templates --out ./output
