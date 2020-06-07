@@ -1,0 +1,16 @@
+html{
+    background-color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 0px;
+    margin: 0px;
+}
+body{
+    padding: 0px;
+    margin: 0px;
+}
+#ContentBody{
+    margin:1%;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color:white;
+}

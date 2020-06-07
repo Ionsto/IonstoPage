@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>WaterFlow</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+</head>
+<body>
+    <script id="StaggerdFragShader" type="x-shader/x-fragment" style="display: none;">
+        precision mediump float;
+        uniform sampler2D uSampler;
+        varying highp vec2 TextureLocation;
+        void main(void) {
+            gl_FragColor = texture2D(uSampler,TextureLocation);
+        }
+    </script>
+    <script id="StaggerdVertShader" type="x-shader/x-vertex" style="display: none;">
+        precision mediump float;
+        attribute vec2 VertexPosition;      
+        varying highp vec2 TextureLocation;
+        float round(float x)
+        {
+            return floor(x+0.5);
+        }
+        void main(void) {
+            gl_Position = vec4(VertexPosition, 0.0, 1.0);        
+            TextureLocation.s = ((VertexPosition.x) + 1.0)/2.0;        
+            TextureLocation.t = ((VertexPosition.y*-1.0) + 1.0)/2.0;
+        }
+    </script>
+    <script id="ContoursFragShader" type="x-shader/x-fragment" style="display: none;">
+        precision mediump float;
+        varying vec4 vColour;
+        float round(float x) 
+        {
+            return floor(x+0.5);
+        }
+        void main(void) {
+            if(floor(vColour.w) == 1.0)
+            {
+            gl_FragColor = vec4(0,1,0, 1.0);
+            }
+            else{
+            float Colourprecision = 10.0;
+            gl_FragColor = vec4(round(vColour.x*Colourprecision)/Colourprecision,round(vColour.y*Colourprecision)/Colourprecision,round(vColour.z*Colourprecision)/Colourprecision, 1.0);
+            }
+        }
+    </script>
+    <script id="ContoursVertShader" type="x-shader/x-vertex" style="display: none;">
+        precision mediump float;
+        attribute vec2 VertexPosition;
+        attribute vec4 VertexColour;//R,G,B, Type
+        varying vec4 vColour;
+        void main(void) {
+            gl_Position = vec4(VertexPosition, 0.0, 1.0);
+            vColour = VertexColour;
+        }
+    </script>
+    <script id="FragmentShader" type="x-shader/x-fragment" style="display: none;">
+        precision mediump float;
+        varying vec4 vColour;
+        float round(float x)
+        {
+	        return floor(x+0.5);
+        }
+        void main(void) {
+		    gl_FragColor = vec4(vColour.xyz, 1.0);
+        }
+    </script>
+    <script id="VertexShader" type="x-shader/x-vertex" style="display: none;">
+        attribute vec2 VertexPosition;
+        attribute vec4 VertexColour;//R,G,B, Type
+        varying vec4 vColour;
+        void main(void) {
+            gl_Position = vec4(VertexPosition, 0.0, 1.0);
+            vColour = VertexColour;
+        }
+    </script>
+    <script src="jquery-2.1.4.min.js"></script>
+    <canvas id="GuiCanvas" width="500" height="500" oncontextmenu="return false;" style="position: absolute; left: 10px; top: 10px; z-index: 1;"></canvas>
+    <canvas id="RenderCanvas" width="500" height="500" oncontextmenu="return false;" style="position: absolute; left: 10px; top: 10px; z-index: 0;"></canvas>
+    <script src="WebGLGame.js"></script>
+    <script src="Pipe.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<html>
+<head>
+    <title>Waterflow raytracning</title>
+    <link href="../../index.css" rel="stylesheet"></link> 
+</head>
+<body>
+<div id="Header">
+    <div id="HeaderText"><b>Ionsto</b></div>
+    <a href="../../index.html"><span class="HeaderButton">Home</span></a>
+    <a href="../../Programming.html"><span class="HeaderButton">Programming</span></a>
+    <a href="../../CounterStrike.html"><span class="HeaderButton">Counter Strike</span></a>
+    <a href="../../About.html"><span class="HeaderButton">About</span></a>
+</div>
+    <div id="ContentBody">
+        <h1>Hunt</h1>
+        <h2>Concept</h2>
+        This is an prototype project for a game
+        <br />
+        The concept of the game is that the player and the AI are in exactly the same situation. 
+        The player and the AI are both using exactly the same inputs and outputs to interact with the game.
+        Bolt on a fast paced nerual network and you have a <i>Hunting</i> game.
+        <br><br>
+        The world is 2d - but the users can see a psedo 3d representation of it.
+
+        The only way they can see the world is the colour of a ray, it's angle and it's depth.
+        <br>
+        From a top down perspective you can imagine every camera like this.
+        <br>
+        <image src="Top Down.png"></image>
+        <br>
+        But it get's interesting if you consider the actor's point of view. [Different scene]
+        <br>
+        <image src="World_Render.png" style="border-style: solid"></image>
+        <br>
+        <h2>Rendering</h2>
+        Doing full scale raytracing is very hard and very slow. If every actor in a game had to render out an image the player would also enjoy you would have to run at 0.001FPS.
+        <br>
+        The solution was to stylise the game such that it could be easy to render. Every actor is a circle - or a combination of circles.
+        <br>
+        There is only a 2d plane of rays to worry about - the final 3d image is a trick.
+        Each ray only has 1 bounce.
+        <br>
+        Finally you have a mist factor - that tends all colours to white as the tend towards a "max ray distance".
+        <br>
+        <br>
+        The resulting data is not useful or interesting to look at - so a postprocessor (the real rendering engine) draws a rectangle for each ray.
+        <br>
+        The height is inversly proportional to the distance: height = screenheight * (ray_distance-maxdistance)/maxdistance
+        <br>
+        The colour is a linear blend between the sample colour and 255,255,255
+        <br>
+
+        <h2>AI</h2>
+        The most interesting part of the project was making actors that could work within the system.
+        The rendering engine created data that could almost exactly be fed into feed forward neural networks.
+        <br>
+        Auxillary data was fed in about current velocities (linear and angular) this allowed actors to stop themeselves spinning out of control.
+        <br>
+        Most input values are remapped to 0:1 or -1:1.
+        <br>
+        The output controls were delta angular rotation, move forwards (along look angle), strafe (perpedicular to look angle).
+        <h2>Training</h2>
+        Since the player is hunting - they need somthing to hunt. The AI's job is to realisticly react to hunting behevier - like cover or flanking manuvures.
+        Training neural networks takes lots of data - which I don't have. The second best way of training neural networks is to create data for them.
+        <br>
+        I realised I could use genetic algorithms to generate my network weights.
+        The training scenerao is two predetators attempting to catch a single prey in a small box.
+        The predetors win if they are close enough to the prey. The prey wins after a time limit is reached.
+        <br>
+        <br>
+        Two pools of random networks are created - one prey one predator.
+        <br>
+        All predetor networks and prey networks play eachother.
+        <br>
+        The scenario has positions randomised to remove overfitting.
+        <br>
+        Multiple scenarios are run per matchup.
+        <br><br>
+        The only metric gathered is Wins and Games played. Both populations are sorted by win rate.
+        <br>
+        The bottom half of the population is replaced with randomised versions of the top half.
+        The cycle starts again. 
+    </div>
+</body>
+</html>

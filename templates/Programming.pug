@@ -14,22 +14,28 @@ html(lang="en")
             
             ul
             h1 Projects
-            h3 Raytracing
+            h3 Raytracing - 2020
             p.
                 I wanted to write a GPGPU raytracer, this was the other half of my lofty goal of rewriting waterflow in 3d
                 I played around with 3d fluid and sand simulations, but also worked on a 3d visulisation that would allow the water to be at the forefront.
-            a(href="https://github.com/Ionsto/WaterFlowRT") LD_41
             iframe(width="560" height="315" src="https://www.youtube.com/embed/EJOTpEgKsbY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen)
-            h3 Waterflow
+            br
+            a(href="https://github.com/Ionsto/WaterFlowRT") Waterflow Raytraced
+            h3 Waterflow3D - 2019 onwards
             p.
-                Have you ever played on a beach - and made dams to hold the water flowing out with the tide?
-                Now you can do it in the browser (WebGL powered)
-            a(href="./Programming/WaterFlow/default.htm") Waterflow
-            h3 Typescript test - 2013
+                I wanted to revisit the original waterflow idea and move it into 3d.
+                The original plan was to create an eulerian fluid simulation and slap that into a voxel world.
+                I ended up writing a simple fluid sim, and smoothed partical hydrodynamics system (SPH) and a material point method (MPM) simluation.
+                None of these ran at a frame budget and accuracy required and this will be revisited.
             p.
-                Kill the zombies
-            a(href="./Programming/Testtype/Main.html") Zombies
-            h3 Ludum dare 41 entry
+                The material point method could feasibly handle the 3d sand and water multiphase sim - but currently runs too slow.
+                Gif shows the results.
+            img(src="./Programming/WaterFlow3D/mpm.gif")
+            br
+            a(href="https://github.com/Ionsto/MPMSimple ") MPM simple implementation 
+            br
+            a(href="https://github.com/Ionsto/WaterFlow3D") WaterFlow3D 
+            h3 Ludum dare 41 entry - 2018
             p Top down driving game
             p You are in the hotseat of an ambulance - driving recklessly is your game though
             p Game made in 48 hours
@@ -37,3 +43,17 @@ html(lang="en")
             br
             a(href="https://github.com/Ionsto/LD_41/releases") Releases
             br
+            h3 Waterflow - 2015
+            p.
+                Have you ever played on a beach - and made dams to hold the water flowing out with the tide?
+                Now you can do it in the browser (WebGL powered)
+            img(src="./Programming/WaterFlow/Screenshot.png")
+            br
+            a(href="./Programming/WaterFlow/default.htm") Waterflow page
+            br
+            a(href="https://github.com/Ionsto/WaterFlow") Waterflow github
+            h3 Typescript test - 2013
+            p.
+                Kill the zombies
+            a(href="./Programming/Testtype/Main.html") Zombies
+
